@@ -4,12 +4,12 @@
     {
         public IActionResult Index()
         {
-            return View();
+            return Content("Adding this string for testing purposes to see if my Controller is properly routed.");
         }
 
-        public string Welcome()
+        public IActionResult UploadFiles(IFormFileCollection files)
         {
-            return "This is a test action...";
+            return View();
         }
     }
 }

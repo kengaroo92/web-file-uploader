@@ -6,5 +6,10 @@
         {
             return View();
         }
+
+        public string Welcome()
+        {
+            return "This is a test action...";
+        }
     }
 }

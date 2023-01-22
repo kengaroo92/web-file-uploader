@@ -23,15 +23,15 @@ namespace web_file_uploader
         {
             // Register required services for the session state.
             // Session state allows you to store data in a per-user session. Provides a unique session ID.
-            services.AddDistributedMemoryCache();
-            services.AddSession();
-            services.AddControllers();
+            //services.AddDistributedMemoryCache();
+            //services.AddSession();
+            services.AddControllersWithViews();
         }
 
         public void Configure(IApplicationBuilder app)
         {
             app.UseStaticFiles();
-            app.UseSession();
+            //app.UseSession();
             app.UseRouting();
             app.UseEndpoints(endpoints =>
             {

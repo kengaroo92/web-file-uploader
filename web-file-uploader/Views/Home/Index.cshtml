@@ -11,12 +11,12 @@
 </head>
 <body>
     <!-- The enctype 'multipart/form-data' indicates that the form will be sending the data in binary. -->
-    <form method="post" enctype="multipart/form-data">
+    <form method="post" enctype="multipart/form-data" asp-controller="Home" asp-action="UploadFiles" asp-route-HttpVerbs="Post">
         <div>
             <input type="file" name="files" multiple />
         </div>
         <div>
-            <input type="submit" value="Upload" />
+            <input type="submit" name="submit" value="Upload" />
         </div>
     </form>
 </body>

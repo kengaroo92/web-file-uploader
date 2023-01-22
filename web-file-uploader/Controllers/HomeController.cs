@@ -16,12 +16,13 @@
         }
 
         // Identify an action that supports the HTTP POST method. The handler is written using the HTTP protocol, and the method used to upload the files is a POST method.
-        [HttpPost("UploadFiles")]
+        [HttpPost]
         // IFormFileCollection is a collection of the IFormFile object. Which is the equivalent to formData object in vanilla JavaScript.
         public async Task<IActionResult> UploadFiles(IFormFileCollection files)
         {
             // Get the physical path to the file's destination folder.
-            var folderPath = Path.Combine(_environment.WebRootPath, "uploads");
+            //var folderPath = Path.Combine(_environment.WebRootPath, "uploads");
+            var folderPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop));
 
             // If the directory doesn't exist, create the directory.
             if (!Directory.Exists(folderPath))
@@ -36,35 +37,40 @@
                 var fileName = Path.GetFileName(file.FileName);
 
                 // Get the physical path to the files destination.
+                //var filePath = Path.Combine(folderPath, fileName);
                 var filePath = Path.Combine(folderPath, fileName);
 
-                // Save the files to the server.
-                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                if (file != null && file.Length > 0)
                 {
-                    // The await task is used to allow each file to finish saving before the method continues.
-                    await file.CopyToAsync(fileStream);
+                    // Save the files to the server.
+                    using (var fileStream = new FileStream(filePath, FileMode.Create))
+                    {
+                        // The await task is used to allow each file to finish saving before the method continues.
+                        await file.CopyToAsync(fileStream);
+                    }
                 }
             }
 
             // The following code will send the binary data to the external file handler using the HttpClient.
-            using (var client = new HttpClient())
-            {
-                var formData = new MultipartFormDataContent();
+            //using (var client = new HttpClient())
+            //{
+            //    var formData = new MultipartFormDataContent();
 
-                foreach (var file in files)
-                {
-                    formData.Add(new StreamContent(file.OpenReadStream()), "file", file.FileName);
-                }
+            //    foreach (var file in files)
+            //    {
+            //        formData.Add(new StreamContent(file.OpenReadStream()), "file", file.FileName);
+            //    }
 
-                var response = await client.PostAsync("http://INSERSERVERHERE.NET/Handler.ashx", formData);
+            //    var response = await client.PostAsync("http://INSERSERVERHERE.NET/Handler.ashx", formData);
 
-                if (!response.IsSuccessStatusCode)
-                {
-                    return BadRequest("An error has occurred while uploading the files.");
-                }
-            }
+            //    if (!response.IsSuccessStatusCode)
+            //    {
+            //        return BadRequest("An error has occurred while uploading the files.");
+            //    }
+            //}
 
-            return Ok("The files were successfully uploaded.");
+            //return Ok("The files were successfully uploaded.");
+            return View("Success");
         }
     }
 }

@@ -1,6 +1,6 @@
 namespace web_file_uploader
 {
-    public class Program
+    public static class Program
     {
         public static async Task Main(string[] args)
         {
@@ -21,17 +21,13 @@ namespace web_file_uploader
     {
         public void ConfigureServices(IServiceCollection services)
         {
-            // Register required services for the session state.
-            // Session state allows you to store data in a per-user session. Provides a unique session ID.
-            //services.AddDistributedMemoryCache();
-            //services.AddSession();
+            // This method configures the services for Controllers and Views when using the MVC design pattern. 
             services.AddControllersWithViews();
         }
 
         public void Configure(IApplicationBuilder app)
         {
             app.UseStaticFiles();
-            //app.UseSession();
             app.UseRouting();
             app.UseEndpoints(endpoints =>
             {
